@@ -1,0 +1,101 @@
+seed: 42
+data:
+  attachment2: ../data/attachment2/aligned_50.pkl
+  label_file: ../data/attachment2/label.xlsx
+  attachment3_aligned: data/����3-ģ̬ȱʧ��������/����汾
+  attachment3_unaligned: data/����3-ģ̬ȱʧ��������/δ����汾
+  attachment4_aligned: data/����4-�ɽ���ר����Ƶ�����������ļ�/����4-�ɽ���ר����Ƶ�����������ļ�/����汾
+  sequence_length: 50
+  text_bert_channels:
+    input_ids: 0
+    attention_mask: 1
+    token_type_ids: 2
+  label_mapping:
+    0: Negative
+    1: Neutral
+    2: Positive
+model:
+  pretrained_name: ../pretrained/bert-base-uncased
+  freeze_bert: true
+  local_files_only: true
+  text_dim: 768
+  audio_dim: 74
+  vision_dim: 35
+  d_model: 128
+  nhead: 4
+  compensation_ffn: 256
+  transformer_layers: 2
+  transformer_ffn: 256
+  dropout: 0.1
+  num_classes: 3
+  max_len: 50
+  bounded_regression: false
+masking:
+  complete_sample_probability: 0.15
+  missing_ratios:
+  - 0.1
+  - 0.2
+  - 0.4
+  - 0.6
+  modality_combinations:
+  - T
+  - A
+  - V
+  - TA
+  - TV
+  - AV
+  - TAV
+  short_lengths:
+  - 1
+  - 3
+  medium_lengths:
+  - 4
+  - 8
+  long_lengths:
+  - 9
+  - 15
+  valid_replay_seed: 20260923
+evaluation:
+  attachment3_masking:
+    complete_sample_probability: 0.1
+    missing_ratios:
+    - 0.1
+    - 0.2
+    - 0.3
+    - 0.4
+    - 0.5
+    modality_combinations:
+    - AV
+    synchronize_modalities: true
+    valid_replay_seed: 20260923
+loss:
+  lambda_cls: 1.0
+  lambda_reg: 0.5
+  lambda_rec: 0.05
+  huber_delta: 1.0
+  class_weights: null
+  label_smoothing: 0.0
+training:
+  batch_size: 16
+  gradient_accumulation_steps: 1
+  stage1_epochs: 20
+  stage2_epochs: 30
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  patience: 6
+  num_workers: 0
+  use_amp: true
+  deterministic: true
+  gradient_clip_norm: 1.0
+  freeze_projections_in_stage2: true
+  selection_metric: valid_accuracy
+  save_last_checkpoint: false
+explain:
+  ig_steps: 32
+  topk_fraction: 0.2
+  random_repeats: 10
+  random_seed: 42
+  completeness_tolerance: 0.05
+output:
+  root: ../outputs/e7a_runs
+  reports: reports

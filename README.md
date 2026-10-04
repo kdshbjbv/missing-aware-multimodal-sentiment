@@ -3,12 +3,12 @@
 This repository organizes the Q1 raw-video feature pipeline and the frozen E7a sentiment model. It retains the original model implementation in `e7a_core/` and the Q1 implementation in `q1_core/`. The public wrappers in `scripts/` connect them through an explicit adapter.
 
 ```text
-MP4 → FFmpeg WAV → WhisperX English words and timestamps
-    → COVAREP-74 Audio + OpenFace-35 Vision + BERT word features
-    → word-window alignment (50 Q1 positions)
-    → WordPiece retokenization and mask transfer
-    → frozen BERT + three E7a members
-    → equal mean of original raw logits, argmax + mean regression
+MP4 �� FFmpeg WAV �� WhisperX English words and timestamps
+    �� COVAREP-74 Audio + OpenFace-35 Vision + BERT word features
+    �� word-window alignment (50 Q1 positions)
+    �� WordPiece retokenization and mask transfer
+    �� frozen BERT + three E7a members
+    �� equal mean of original raw logits, argmax + mean regression
 ```
 
 **Release scope:** the public Git repository contains code, tests, and integrity manifests. The three compact E7a checkpoints are hash-verified in the local checkout, but their Git LFS objects could not be uploaded from this host, so they are not present in the public repository yet. The 100 local CMU-MOSEI videos and the three attachment 2 files are deliberately excluded from Git because their redistribution rights were not established. Their local copies are unchanged and match the original files by SHA-256. See [DATA_LICENSE.md](DATA_LICENSE.md) and [data/README.md](data/README.md).
@@ -18,7 +18,7 @@ MP4 → FFmpeg WAV → WhisperX English words and timestamps
 - Attachment 1 contains 100 MP4 clips and one workbook, not five clips. Only MP4 appears in this source set. Format/codec probing could not be repeated here because FFprobe is unavailable on the tested Windows machine.
 - Attachment 2 has the original train/valid/test splits of 3,395/728/727. Its aligned tensors are `text_bert=[N,3,50]`, `audio=[N,50,74]`, and `vision=[N,50,35]`. The unaligned Audio/Vision arrays have 500 time positions.
 - All three compact checkpoint hashes match `e7a_core/checkpoint_manifest.json`; all three state dicts load into E7a with a test encoder and execute a CPU forward pass.
-- The Q1→E7a adapter and synthetic CPU tests pass. Full raw-video inference was not verified: the supplied data has no COVAREP MAT files and the tested environment lacks FFmpeg, OpenFace, WhisperX, and the BERT weights.
+- The Q1��E7a adapter and synthetic CPU tests pass. Full raw-video inference was not verified: the supplied data has no COVAREP MAT files and the tested environment lacks FFmpeg, OpenFace, WhisperX, and the BERT weights.
 
 ## Layout
 
@@ -69,12 +69,12 @@ Supply precomputed COVAREP MAT files matching the video sample IDs in `precomput
 
 ```bash
 python scripts/extract_features.py --input_dir data/attachment1 --output_dir outputs/attachment1_features --config configs/feature_extraction.yaml --covarep_dir precomputed/covarep
-python scripts/extract_features.py --input_video data/attachment1/MOSEI数据集部分原始视频-100条/VIDEO_ID/CLIP_ID.mp4 --output_dir outputs/one/features --config configs/feature_extraction.yaml --covarep_dir precomputed/covarep
-python scripts/predict_video.py --input_video data/attachment1/MOSEI数据集部分原始视频-100条/VIDEO_ID/CLIP_ID.mp4 --output_dir outputs/one --feature_config configs/feature_extraction.yaml --model_config configs/e7a_inference.yaml --covarep_dir precomputed/covarep
+python scripts/extract_features.py --input_video data/attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��/VIDEO_ID/CLIP_ID.mp4 --output_dir outputs/one/features --config configs/feature_extraction.yaml --covarep_dir precomputed/covarep
+python scripts/predict_video.py --input_video data/attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��/VIDEO_ID/CLIP_ID.mp4 --output_dir outputs/one --feature_config configs/feature_extraction.yaml --model_config configs/e7a_inference.yaml --covarep_dir precomputed/covarep
 python scripts/predict_video.py --input_dir data/attachment1 --output_dir outputs/attachment1 --feature_config configs/feature_extraction.yaml --model_config configs/e7a_inference.yaml --covarep_dir precomputed/covarep
 ```
 
-The commands above are supported entry points but were **not** run end to end on this host. The wrapper fails explicitly when prerequisites are absent. Existing Q1 output can be sent directly to `python scripts/predict_features.py --features /path/to/versionB.pkl --output_dir outputs/prediction --config configs/e7a_inference.yaml` once BERT is installed. Predictions use the mean of the three members' **原始logits** (raw logits), zero class bias `[0,0,0]`, then argmax. Regression uses the mean of three regression outputs. The CSV contains ID, class, regression, three raw logits, probabilities, observed Text/Audio/Vision flags, and truncation.
+The commands above are supported entry points but were **not** run end to end on this host. The wrapper fails explicitly when prerequisites are absent. Existing Q1 output can be sent directly to `python scripts/predict_features.py --features /path/to/versionB.pkl --output_dir outputs/prediction --config configs/e7a_inference.yaml` once BERT is installed. Predictions use the mean of the three members' **ԭʼlogits** (raw logits), zero class bias `[0,0,0]`, then argmax. Regression uses the mean of three regression outputs. The CSV contains ID, class, regression, three raw logits, probabilities, observed Text/Audio/Vision flags, and truncation.
 
 ## Train and evaluate E7a
 
@@ -95,4 +95,3 @@ The original E7a architecture includes a frozen BERT encoder, Text/Audio/Vision 
 Original Q3 explanation implementations remain in `e7a_core/src/explain.py` and `explain_classification.py`, with task-specific drivers in `e7a_core/`. They cover modality Shapley, classification raw logits, regression, Integrated Gradients, occlusion faithfulness, gate weights, and missingness diagnostics for the original Q3 data flow. A generic raw-video explanation entry point and reliable mapping back to frames were **not** verified, so this repository makes no claim that `predict_video.py` produces explanations. See [limitations](docs/limitations.md).
 
 The code license is MIT. No dataset rights are granted by that license. Cite the original CMU-MOSEI paper and this repository when appropriate. Third-party pretrained models and extraction tools have their own terms.
-

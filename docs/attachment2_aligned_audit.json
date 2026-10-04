@@ -1,0 +1,199 @@
+{
+  "filename": "aligned_50.pkl",
+  "top_level_keys": [
+    "train",
+    "valid",
+    "test"
+  ],
+  "splits": {
+    "train": {
+      "raw_text": {
+        "shape": [
+          3395
+        ],
+        "dtype": "<U1662"
+      },
+      "audio": {
+        "shape": [
+          3395,
+          50,
+          74
+        ],
+        "dtype": "float64"
+      },
+      "vision": {
+        "shape": [
+          3395,
+          50,
+          35
+        ],
+        "dtype": "float64"
+      },
+      "id": {
+        "shape": [
+          3395
+        ],
+        "dtype": "<U16"
+      },
+      "text_bert": {
+        "shape": [
+          3395,
+          3,
+          50
+        ],
+        "dtype": "int64"
+      },
+      "classification_labels": {
+        "shape": [
+          3395
+        ],
+        "dtype": "float64"
+      },
+      "regression_labels": {
+        "shape": [
+          3395
+        ],
+        "dtype": "float64"
+      },
+      "text": {
+        "shape": [
+          3395,
+          50,
+          768
+        ],
+        "dtype": "float32"
+      },
+      "classification_distribution": {
+        "0.0": 967,
+        "1.0": 758,
+        "2.0": 1670
+      }
+    },
+    "valid": {
+      "raw_text": {
+        "shape": [
+          728
+        ],
+        "dtype": "<U1570"
+      },
+      "audio": {
+        "shape": [
+          728,
+          50,
+          74
+        ],
+        "dtype": "float64"
+      },
+      "vision": {
+        "shape": [
+          728,
+          50,
+          35
+        ],
+        "dtype": "float64"
+      },
+      "id": {
+        "shape": [
+          728
+        ],
+        "dtype": "<U16"
+      },
+      "text_bert": {
+        "shape": [
+          728,
+          3,
+          50
+        ],
+        "dtype": "int64"
+      },
+      "classification_labels": {
+        "shape": [
+          728
+        ],
+        "dtype": "float64"
+      },
+      "regression_labels": {
+        "shape": [
+          728
+        ],
+        "dtype": "float64"
+      },
+      "text": {
+        "shape": [
+          728,
+          50,
+          768
+        ],
+        "dtype": "float32"
+      },
+      "classification_distribution": {
+        "0.0": 206,
+        "1.0": 184,
+        "2.0": 338
+      }
+    },
+    "test": {
+      "raw_text": {
+        "shape": [
+          727
+        ],
+        "dtype": "<U1479"
+      },
+      "audio": {
+        "shape": [
+          727,
+          50,
+          74
+        ],
+        "dtype": "float64"
+      },
+      "vision": {
+        "shape": [
+          727,
+          50,
+          35
+        ],
+        "dtype": "float64"
+      },
+      "id": {
+        "shape": [
+          727
+        ],
+        "dtype": "<U16"
+      },
+      "text_bert": {
+        "shape": [
+          727,
+          3,
+          50
+        ],
+        "dtype": "int64"
+      },
+      "classification_labels": {
+        "shape": [
+          727
+        ],
+        "dtype": "float64"
+      },
+      "regression_labels": {
+        "shape": [
+          727
+        ],
+        "dtype": "float64"
+      },
+      "text": {
+        "shape": [
+          727,
+          50,
+          768
+        ],
+        "dtype": "float32"
+      },
+      "classification_distribution": {
+        "0.0": 207,
+        "1.0": 158,
+        "2.0": 362
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this code, cite this repository and the original CMU-MOSEI paper."
+type: software
+title: "Missing-aware multimodal sentiment analysis"
+authors:
+  - name: "Project contributors"
+repository-code: "https://github.com/kdshbjbv/missing-aware-multimodal-sentiment"
+license: MIT

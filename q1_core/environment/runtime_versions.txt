@@ -1,0 +1,18 @@
+Reference runtime used to reproduce the published results.
+
+Python: 3.10.21
+NumPy: 2.2.6
+Pandas: 2.3.3
+PyTorch: 2.8.0+cu126
+Transformers: 4.57.6
+SciPy: 1.15.2
+SoundFile: 0.14.0
+WhisperX: 3.8.6
+faster-whisper: 1.2.1
+CTranslate2: 4.8.2
+pyannote-audio: 4.0.7
+Montreal Forced Aligner: 3.3.5
+FFmpeg: 7.1
+GPU: NVIDIA GeForce RTX 3090, 24260 MiB
+WhisperX compute type: float16
+WhisperX batch size: 8

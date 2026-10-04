@@ -1,0 +1,89 @@
+project:
+  seed: 2026
+  max_len: 50
+  resume: true
+  strict_final_validation: true
+
+paths:
+  # Relative paths are resolved from the Q1 project root.
+  dataset_root: ../data/附件1-数据集原始多模态样本/MOSEI数据集部分原始视频-100条
+  label_file: ../data/附件1-数据集原始多模态样本/MOSEI数据集部分原始视频-100条/label-100.xlsx
+  work_dir: work
+  output_dir: results
+  mfa_root_dir: cache/mfa
+  mfa_temp_dir: work/mfa/temp
+  huggingface_home: cache/huggingface
+  ffmpeg: ffmpeg
+  ffprobe: ffprobe
+  mfa: mfa
+  openface_feature_extraction: FeatureExtraction
+  openface_library_dir: ""
+  covarep_command: ""
+
+data:
+  label_sheet: label
+  sample_id_separator: "$_$"
+  classification_mapping:
+    Negative: 0
+    Neutral: 1
+    Positive: 2
+
+audio:
+  sample_rate: 16000
+  channels: 1
+  primary_extractor: covarep
+  fallback_extractor: opensmile
+  opensmile_feature_set: eGeMAPSv02
+  opensmile_feature_level: LowLevelDescriptors
+
+alignment:
+  provider: mfa
+  mfa_dictionary: english_us_arpa
+  mfa_acoustic_model: english_us_arpa
+  mfa_num_jobs: 4
+  mfa_use_threading: true
+  mfa_clean_before_align: true
+  mfa_retry_missing_isolated: true
+  mfa_retry_beam: 100
+  mfa_retry_retry_beam: 1000
+  overlength_strategy: truncate
+  pooling: mean
+  timestamp_padding_value: 0.0
+
+problem1:
+  covarep_feature_key: features
+  covarep_names_key: names
+  covarep_hop_seconds: 0.01
+  covarep_first_sample_fraction: 0.5
+  covarep_expected_dim: 74
+  text_expected_dim: 768
+  vision_expected_dim: 35
+  vision_legacy_dim: 22
+  timestamp_tolerance: 1.0e-6
+  silent_max_abs_threshold: 1.0e-12
+  dataset_file: problem1_aligned_features.pkl
+  summary_file: feature_summary.csv
+  validation_report: problem1_validation_report.json
+
+text:
+  model_name: google-bert/bert-base-uncased
+  hf_endpoint: https://hf-mirror.com
+  device: auto
+  batch_size: 16
+  local_files_only: false
+  max_model_tokens: 512
+
+vision:
+  extractor: openface
+  confidence_threshold: 0.80
+  include_au_presence: false
+  include_translation: false
+  extra_openface_args: []
+
+output:
+  dataset_file: features_aligned_50.pkl
+  summary_file: feature_summary.csv
+  log_file: processing_log.txt
+  figure_file: alignment_example.png
+  manifest_file: manifest.csv
+  include_failed_samples: true
