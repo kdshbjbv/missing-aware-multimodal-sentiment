@@ -16,7 +16,7 @@ The videos can show faces, contain identifiable voices, names, subtitles, or acc
 
 The local attachment contains two feature pickles and one label workbook. No independent redistribution license was found in the supplied files. The aligned pickle also contains `raw_text` and sample IDs, so it should not be assumed anonymous. **These files are excluded from public Git history** pending a documented license and privacy review. Obtain the data from its authorized publisher or provide a locally authorized copy.
 
-δ���ֶ����������ٷַ�����֤��������Դ��ʹ����������ԭʼ����������Ϊ׼��
+未发现独立的数据再分发许可证；数据来源和使用条件请以原始发布方规则为准。
 
 ## Third-party tools and models
 

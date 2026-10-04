@@ -4,8 +4,8 @@ The data directories are local inputs and are ignored by Git. Public manifests r
 
 ```text
 data/
-  attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��/<video_id>/<clip_id>.mp4
-  attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��/label-100.xlsx
+  attachment1/MOSEI数据集部分原始视频-100条/<video_id>/<clip_id>.mp4
+  attachment1/MOSEI数据集部分原始视频-100条/label-100.xlsx
   attachment2/aligned_50.pkl
   attachment2/unaligned_50.pkl
   attachment2/label.xlsx

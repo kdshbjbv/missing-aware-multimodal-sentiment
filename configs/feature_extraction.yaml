@@ -4,8 +4,8 @@ project:
   resume: true
   strict_final_validation: true
 paths:
-  dataset_root: data/attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��
-  label_file: data/attachment1/MOSEI���ݼ�����ԭʼ��Ƶ-100��/label-100.xlsx
+  dataset_root: data/attachment1/MOSEI数据集部分原始视频-100条
+  label_file: data/attachment1/MOSEI数据集部分原始视频-100条/label-100.xlsx
   work_dir: outputs/q1_work
   output_dir: outputs/q1
   mfa_root_dir: outputs/q1_work/mfa

@@ -27,7 +27,7 @@ class MissingSpeechSettings:
 
 
 def normalize_word(value: Any) -> str:
-    return re.sub(r"[^a-z0-9]+", "", str(value).lower().replace("��", "'"))
+    return re.sub(r"[^a-z0-9]+", "", str(value).lower().replace("’", "'"))
 
 
 def lcs_word_matches(

@@ -1,11 +1,11 @@
 seed: 42
 
 data:
-  attachment2: data/����2-���ݼ������ļ�/aligned_50.pkl
-  label_file: data/����2-���ݼ������ļ�/label.xlsx
-  attachment3_aligned: data/����3-ģ̬ȱʧ��������/����汾
-  attachment3_unaligned: data/����3-ģ̬ȱʧ��������/δ����汾
-  attachment4_aligned: data/����4-�ɽ���ר����Ƶ�����������ļ�/����4-�ɽ���ר����Ƶ�����������ļ�/����汾
+  attachment2: data/附件2-数据集特征文件/aligned_50.pkl
+  label_file: data/附件2-数据集特征文件/label.xlsx
+  attachment3_aligned: data/附件3-模态缺失特征样本/对齐版本
+  attachment3_unaligned: data/附件3-模态缺失特征样本/未对齐版本
+  attachment4_aligned: data/附件4-可解释专项视频样本与特征文件/附件4-可解释专项视频样本与特征文件/对齐版本
   sequence_length: 50
   text_bert_channels:
     input_ids: 0
