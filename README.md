@@ -13,6 +13,8 @@ MP4 → FFmpeg WAV → WhisperX English words and timestamps
 
 **Release scope:** the public Git repository contains code, tests, integrity manifests, and three compact E7a checkpoints in Git LFS. A fresh clone downloaded all three weights, and their SHA-256 hashes matched the source. Attachment 1 (100 local CMU-MOSEI clips and a label workbook) and attachment 2 (two feature pickles and a label workbook) are not hosted here. Place matching files in the local paths in [data/README.md](data/README.md), then run the manifest checks. See [DATA_LICENSE.md](DATA_LICENSE.md) for source-data terms.
 
+**After placing data:** the attachment 2 evaluation and training entries also need a complete `bert-base-uncased` model; `scripts/download_models.py` prepares it when Hugging Face is reachable. Attachment 1 alone is insufficient for raw-video prediction: the retained Q1 route additionally requires per-clip COVAREP-74 MAT files, FFmpeg, OpenFace, WhisperX, and their models. The exact project attachments are not known to be downloadable from the generic CMU-MOSEI links, so check the manifests before running either path.
+
 ## What was actually checked
 
 - Attachment 1 contains 100 MP4 clips and one workbook, not five clips. Only MP4 appears in this source set. Format/codec probing could not be repeated here because FFprobe is unavailable on the tested Windows machine.
