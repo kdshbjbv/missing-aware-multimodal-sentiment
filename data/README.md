@@ -2,6 +2,12 @@
 
 The data directories are local inputs and are ignored by Git. Public manifests record their file sizes and SHA-256 hashes without including the media or feature content.
 
+## Where to obtain and place data
+
+The upstream dataset is [CMU-MOSEI](https://multicomp.cs.cmu.edu/resources/cmu-mosei-dataset/), whose computational sequences are distributed through the [CMU Multimodal SDK](https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK). The SDK states that it does not distribute the original YouTube videos. **The exact 100-clip subset and the project-specific `aligned_50.pkl` / `unaligned_50.pkl` files are not identified as downloads at those upstream links.** Obtain the exact project attachments from a source that is authorized to provide them. A different MOSEI release may have different files and will not pass the included hashes or necessarily work with this model.
+
+From the repository root, place the complete video directory and its `label-100.xlsx` under `data/attachment1/`, and place `aligned_50.pkl`, `unaligned_50.pkl`, and `label.xlsx` directly under `data/attachment2/`. Preserve filenames and file bytes. The resulting layout must be:
+
 ```text
 data/
   attachment1/MOSEI数据集部分原始视频-100条/<video_id>/<clip_id>.mp4
@@ -12,6 +18,8 @@ data/
   manifests/attachment1_manifest.csv
   manifests/attachment2_manifest.csv
 ```
+
+Run the two verification commands below before training or inference. They require exact path, file-size, and SHA-256 matches. The three model weights are downloaded automatically by Git LFS during a normal clone; if LFS smudge was skipped, run `git lfs pull`.
 
 Attachment 1 has **100 MP4 files plus one label workbook**, totaling 103,633,174 bytes. They provide the Q1 raw-video input, official-text labels for Version A, and source timestamps for feature alignment. `video_id` is the parent folder, `clip_id` the MP4 stem, and Q1 forms `sample_id` as `video_id$_$clip_id`. Version B instead obtains English text and word times with WhisperX, without using the workbook labels.
 

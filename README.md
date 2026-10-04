@@ -11,13 +11,13 @@ MP4 → FFmpeg WAV → WhisperX English words and timestamps
     → equal mean of original raw logits, argmax + mean regression
 ```
 
-**Release scope:** the public Git repository contains code, tests, and integrity manifests. The three compact E7a checkpoints are hash-verified in the local checkout, but their Git LFS objects could not be uploaded from this host, so they are not present in the public repository yet. The 100 local CMU-MOSEI videos and the three attachment 2 files are deliberately excluded from Git because their redistribution rights were not established. Their local copies are unchanged and match the original files by SHA-256. See [DATA_LICENSE.md](DATA_LICENSE.md) and [data/README.md](data/README.md).
+**Release scope:** the public Git repository contains code, tests, integrity manifests, and three compact E7a checkpoints in Git LFS. A fresh clone downloaded all three weights, and their SHA-256 hashes matched the source. Attachment 1 (100 local CMU-MOSEI clips and a label workbook) and attachment 2 (two feature pickles and a label workbook) are not hosted here. Place matching files in the local paths in [data/README.md](data/README.md), then run the manifest checks. See [DATA_LICENSE.md](DATA_LICENSE.md) for source-data terms.
 
 ## What was actually checked
 
 - Attachment 1 contains 100 MP4 clips and one workbook, not five clips. Only MP4 appears in this source set. Format/codec probing could not be repeated here because FFprobe is unavailable on the tested Windows machine.
 - Attachment 2 has the original train/valid/test splits of 3,395/728/727. Its aligned tensors are `text_bert=[N,3,50]`, `audio=[N,50,74]`, and `vision=[N,50,35]`. The unaligned Audio/Vision arrays have 500 time positions.
-- All three compact checkpoint hashes match `e7a_core/checkpoint_manifest.json`; all three state dicts load into E7a with a test encoder and execute a CPU forward pass.
+- All three compact checkpoint hashes match `e7a_core/checkpoint_manifest.json`; all three state dicts load into E7a with a test encoder and execute a CPU forward pass. A fresh GitHub clone downloaded the actual LFS objects, passed the four project tests, and verified the three source SHA-256 hashes.
 - The Q1→E7a adapter and synthetic CPU tests pass. Full raw-video inference was not verified: the supplied data has no COVAREP MAT files and the tested environment lacks FFmpeg, OpenFace, WhisperX, and the BERT weights.
 
 ## Layout
@@ -28,7 +28,7 @@ MP4 → FFmpeg WAV → WhisperX English words and timestamps
 | `e7a_core/` | Original E7a computation, trainer, evaluator, explanation modules |
 | `src/data/q1_to_e7a_adapter.py` | Q1 word sequence to E7a token sequence |
 | `scripts/` | Portable public entry points and validation |
-| `checkpoints/` | Three compact non-BERT member weights in the local checkout; public upload pending |
+| `checkpoints/` | Three compact non-BERT member weights in Git LFS |
 | `data/manifests/` | Local data hashes; no data content |
 | `data/attachment1`, `data/attachment2` | User-supplied local inputs, excluded from Git |
 
@@ -42,18 +42,18 @@ python -m venv .venv
 # PowerShell: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m pytest -q
-python scripts/verify_checkpoints.py --checkpoint_dir checkpoints  # after placing the three local weights
+python scripts/verify_checkpoints.py --checkpoint_dir checkpoints
 ```
 
 For the full Q1 extractor, create a separate compatible Python 3.10 environment and install `q1_core/environment/requirements-repro.txt`; its pinned PyTorch/WhisperX stack differs from the lightweight test environment. On Windows use PowerShell activation as above; on Linux use the `source` command. The external executables and model downloads still need separate installation.
 
 The full video route additionally requires FFmpeg/FFprobe, OpenFace 2.2 `FeatureExtraction`, WhisperX, COVAREP 74-dimensional MAT files, and the English BERT model. See [raw-video setup](docs/raw_video_pipeline.md) and the original [external tool notes](q1_core/docs/EXTERNAL_TOOLS.md). Q1 accepts the supplied MP4 tree; AVI/MOV/MKV and other languages were not tested. Audio absence is reported by the Q1 processing stages. The recommended video length is the short utterance clips represented by this dataset; longer input may be truncated to 50 positions.
 
-Download [google-bert/bert-base-uncased](https://huggingface.co/google-bert/bert-base-uncased) through the official Hugging Face tooling, then place the full model and tokenizer directory in `pretrained/bert-base-uncased/`. The default configs use `local_files_only: true`. For an online run, change `model.pretrained_name` to `google-bert/bert-base-uncased` and `local_files_only` to `false` in the model config. Download WhisperX and MFA models from their upstream sources according to Q1's documentation. Large third-party caches are not committed.
+Run `python scripts/download_models.py` once to download [google-bert/bert-base-uncased](https://huggingface.co/google-bert/bert-base-uncased), save the complete model and tokenizer to `pretrained/bert-base-uncased/`, and verify that they reload offline. The default configs then use `local_files_only: true`. For an online run without a local directory, change `model.pretrained_name` to `google-bert/bert-base-uncased` and `local_files_only` to `false` in the model config. Download WhisperX and MFA models from their upstream sources according to Q1's documentation. Large third-party caches are not committed.
 
 ## Local data checks
 
-After obtaining a lawfully distributable copy of the data in the structure described in [data/README.md](data/README.md):
+After obtaining the exact source attachments and placing them in the structure described in [data/README.md](data/README.md):
 
 ```bash
 python scripts/verify_dataset.py --data_dir data/attachment1 --manifest data/manifests/attachment1_manifest.csv
