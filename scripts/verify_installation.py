@@ -28,8 +28,13 @@ def main() -> int:
                 missing.append(f"Python package: {module}")
         if not (ROOT / "precomputed" / "covarep").is_dir():
             missing.append("Precomputed COVAREP MAT directory")
-        if not (ROOT / "pretrained" / "bert-base-uncased").is_dir():
-            missing.append("Complete BERT model directory")
+        bert_dir = ROOT / "pretrained" / "bert-base-uncased"
+        if not (
+            (bert_dir / "config.json").is_file()
+            and (bert_dir / "vocab.txt").is_file()
+            and any((bert_dir / name).is_file() for name in ("model.safetensors", "pytorch_model.bin"))
+        ):
+            missing.append("Complete BERT model and tokenizer files")
     print(f"Python {sys.version.split()[0]}; mode={args.mode}")
     if missing:
         for item in missing:
@@ -41,3 +46,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
